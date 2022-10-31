@@ -1,6 +1,6 @@
 #include <vector>
 #include <algorithm>
-#include "gtest/gtes.h"
+#include "googletest/gte
 
 
 #include "lib.h"

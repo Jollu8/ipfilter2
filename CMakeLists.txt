@@ -1,18 +1,11 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.23)
 
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
-set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+set(PROJECT_VERSION 0.0.${PATCH_VERSION})
+set(MY_PROJECT_NAME ip_filter)
+project(${MY_PROJECT_NAME} VERSION ${PROJECT_VERSION})
 
-project(ip_filter VERSION ${PROJECT_VESRION})
-
-# Add directory with googletest
-# add_subdirectory(
-#     "${CMAKE_CURRENT_SOURCE_DIR}/googletest"
-#     "googletest"
-# )
-
-find_package(GTest REQUIRED)
-
+option(WITH_GOOGLE_TEST "Whether to build Google test" ON)
 configure_file(version.h.in version.h)
 
 add_executable(ip_filter main.cpp)
@@ -44,6 +37,22 @@ target_link_libraries(unit_tests
         ip_lib
         )
 
+if(WITH_GOOGLE_TEST)
+    #git submodule add https://github.com/google/googletest.git
+    #git submodule update --init --recursive
+    add_subdirectory(./googletest EXCLUDE_FROM_ALL)
+    add_executable(google_test_version test_version.cpp)
+
+    set_target_properties(google_test_version PROPERTIES
+            CXX_STANDARD 17
+            CXX_STANDARD_REQUIRED ON
+            )
+
+    target_link_libraries(google_test_version
+            gtest_main
+            gmock
+            )
+endif()
 if (MSVC)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     target_compile_options(ip_filter PRIVATE
