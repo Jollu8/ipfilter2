@@ -10,9 +10,9 @@ namespace ip
 {
     std::ostream& operator<<(std::ostream& os, const ip::Ip& ipAddress) {
         os << ipAddress.first << '.'
-           << ipAddress.second << '.'
-           << ipAddress.third << '.'
-           << ipAddress.forth;
+            << ipAddress.second << '.'
+            << ipAddress.third << '.'
+            << ipAddress.forth;
 
         return os;
     }
@@ -35,12 +35,12 @@ namespace ip
     void filter<FilterType::Any_46>(const ip::IpPool& ipPool, std::ostream& os) {
         std::copy_if(begin(ipPool), end(ipPool), std::ostream_iterator<ip::Ip>(os, "\n"), [](const ip::Ip& ipAddress) {
             return ipAddress.first == 46 || ipAddress.second == 46 || ipAddress.third == 46 || ipAddress.forth == 46;
-        });
+        }); 
     }
 
     bool ip::IpReverseComparator::operator()(const ip::Ip& lhs, const ip::Ip& rhs) const {
         return std::tie(lhs.first, lhs.second, lhs.third, lhs.forth) >
-               std::tie(rhs.first, rhs.second, rhs.third, rhs.forth);
+            std::tie(rhs.first, rhs.second, rhs.third, rhs.forth); 
     }
 
     ip::Ip parse(const std::string& str) {

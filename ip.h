@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <iostream>
+#include <iostream> 
 
 namespace ip
 {
@@ -25,7 +25,7 @@ namespace ip
         First_46_Second_70,
         Any_46
     };
-
+    
     template <FilterType filterType>
     void filter(const IpPool&, std::ostream&);
 
